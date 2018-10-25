@@ -11,6 +11,7 @@
 .def				output		= r18
 .def				num_a		= r19
 .def				num_b		= r20
+.def				counter		= r21
 
 .org				0x0000
 rjmp				setup
@@ -26,14 +27,15 @@ setup:
 
 ;------------------------Loop section------------------------
 loop:		
-			in		input, PORTD						;Take input from switch
+			in		input, PIND						;Take input from switch
 			rcall	split								;Calling split and returning
 
 			rcall	addition							;Change to what math you want to do
 
 			out		PORTB, output						;Sends answer to LEDs
 			rcall	delay_100ms
-			clc		output								;Clear the output to zeros
+			clr		output								;Clear the output to zeros
+			clr		counter								;Clear the counter to zeros
 
 			rjmp	loop
 
@@ -42,45 +44,68 @@ split:
 			mov		num_a, input						;Saving the input bytes
 			mov		num_b, input						;Saving the input bytes
 			
-			add		num_a, 0b00001111					;Bitmask to remove the top significant bits (Only the 4 least sig left)
+			andi		num_a, 0b00001111					;Bitmask to remove the top significant bits (Only the 4 least sig left)
 			swap	num_b								;Swap the nibbles
-			add		num_b, 0b00001111					;Bitmask to remove the new top significant bits (Only the 4 most sig left)
+			andi		num_b, 0b00001111					;Bitmask to remove the new top significant bits (Only the 4 most sig left)
 			nop
 			ret
-		
+
+;------------------------------------------------------------		
 addition:
 			add		num_a, num_b						;Add A and B and save it in A
 			mov		output, num_a						;Move the value to output register
 			nop
 			ret	
 
+;------------------------------------------------------------
 subtraction:
 			sub		num_a, num_b						;Subtract A and B and save it in A
 			mov		output, num_a						;Move the value to output register
 			nop
 			ret
 
+;------------------------------------------------------------
+subtraction_two:
+			com		num_b								;Taking 'Ones Complement' aka flip the bits
+			neg		num_b								;Taking the 'twos complement'
+			add		num_a, num_b						;Add the two registers together to get a subtraction
+			mov		output, num_a						;Move the value to output register
+			nop
+			ret
+
+
+;------------------------------------------------------------
 multiplication:
 			mul		num_a, num_b						;Multiply A and B and save it in A
 			mov		output, num_a						;Move the value to output register
 			nop
 			ret
 
-multiplication_no_mul:	;TODO: Find out how to stop this process
+;------------------------------------------------------------
+multiplication_no_mul:
 
 			lsr		num_b								;Shift multiplier over with carry
-			brcc	next								;If the shifted out bit is a 1, branch else continue
+			brcc	multiplication_add					;If the shifted out bit is a 1, branch else continue
 
 			add		output, 0b00000000					;Add all zeros (AKA does nothing)
 			lsl		num_a								;Shift multicand over to the left
-			nop
-			rjmp	multipication_no_mul
 
-next:
+			inc		counter								;Counts how many times this loop activates
+			cpi		counter, 0b00000100					;Compares to 4, the size of each number
+			brne	multiplication_no_mul				;Breaks if not equal to 4
+
+			nop
+			ret											;Return to the main loop
+
+;------------------------------------------------------------
+multiplication_add:
 			add		output, num_a						;Add multicand to output
 			lsl		num_a								;Shift multicand over to the left
 			nop
 			rjmp	multiplication_no_mul
+
+divide:
+			
 
 ;--------------------------1s delay--------------------------
 delay_1s:			ldi		R20, 0x53

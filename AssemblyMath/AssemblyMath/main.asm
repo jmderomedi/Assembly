@@ -26,23 +26,61 @@ setup:
 
 ;------------------------Loop section------------------------
 loop:		
-			in		input, PORTD
+			in		input, PORTD						;Take input from switch
+			rcall	split								;Calling split and returning
 
-			rjmp	addition
+			rcall	addition							;Change to what math you want to do
+
+			out		PORTB, output						;Sends answer to LEDs
+			rcall	delay_100ms
+			clc		output								;Clear the output to zeros
+
+			rjmp	loop
 
 ;------------------------------------------------------------
 split:
-					num_a, input
-			mov		num_b, input
-			(num_a>>4)
-
-			lsl		num_b
-			lsl		num_b
-			lsl		num_b
-			lsl		num_b
-
+			mov		num_a, input						;Saving the input bytes
+			mov		num_b, input						;Saving the input bytes
+			
+			add		num_a, 0b00001111					;Bitmask to remove the top significant bits (Only the 4 least sig left)
+			swap	num_b								;Swap the nibbles
+			add		num_b, 0b00001111					;Bitmask to remove the new top significant bits (Only the 4 most sig left)
+			nop
+			ret
+		
 addition:
-			add		
+			add		num_a, num_b						;Add A and B and save it in A
+			mov		output, num_a						;Move the value to output register
+			nop
+			ret	
+
+subtraction:
+			sub		num_a, num_b						;Subtract A and B and save it in A
+			mov		output, num_a						;Move the value to output register
+			nop
+			ret
+
+multiplication:
+			mul		num_a, num_b						;Multiply A and B and save it in A
+			mov		output, num_a						;Move the value to output register
+			nop
+			ret
+
+multiplication_no_mul:	;TODO: Find out how to stop this process
+
+			lsr		num_b								;Shift multiplier over with carry
+			brcc	next								;If the shifted out bit is a 1, branch else continue
+
+			add		output, 0b00000000					;Add all zeros (AKA does nothing)
+			lsl		num_a								;Shift multicand over to the left
+			nop
+			rjmp	multipication_no_mul
+
+next:
+			add		output, num_a						;Add multicand to output
+			lsl		num_a								;Shift multicand over to the left
+			nop
+			rjmp	multiplication_no_mul
 
 ;--------------------------1s delay--------------------------
 delay_1s:			ldi		R20, 0x53

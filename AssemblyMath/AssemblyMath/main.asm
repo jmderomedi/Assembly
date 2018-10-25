@@ -66,8 +66,7 @@ subtraction:
 
 ;------------------------------------------------------------
 subtraction_two:
-			com		num_b								;Taking 'Ones Complement' aka flip the bits
-			neg		num_b								;Taking the 'twos complement'
+			neg		num_b								;Taking the 'twos complement', flips the bits and incs
 			add		num_a, num_b						;Add the two registers together to get a subtraction
 			mov		output, num_a						;Move the value to output register
 			nop

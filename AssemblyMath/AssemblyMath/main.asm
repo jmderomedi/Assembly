@@ -6,12 +6,14 @@
 ;---------------------Pre-setup section----------------------
 .cseg	
 
-.def				io_setup	= r16
-.def				input		= r17
-.def				output		= r18
-.def				num_a		= r19
-.def				num_b		= r20
-.def				counter		= r21
+.def				io_setup	= r16					;Used exclusively in setup
+.def				input		= r17					;Used to take in the value from the hardware
+.def				output		= r18					;Used to output the value to hardware
+.def				num_a		= r19					;The first nibble being used
+.def				num_b		= r20					;The second nibble being used
+.def				counter		= r21					;A counter for multiple/division
+.def				remainder	= r22					;Used exclusively in division
+.def				twos		= r23
 
 .org				0x0000
 rjmp				setup
@@ -44,9 +46,9 @@ split:
 			mov		num_a, input						;Saving the input bytes
 			mov		num_b, input						;Saving the input bytes
 			
-			andi		num_a, 0b00001111					;Bitmask to remove the top significant bits (Only the 4 least sig left)
+			andi	num_a, 0b00001111					;Bitmask to remove the top significant bits (Only the 4 least sig left)
 			swap	num_b								;Swap the nibbles
-			andi		num_b, 0b00001111					;Bitmask to remove the new top significant bits (Only the 4 most sig left)
+			andi	num_b, 0b00001111					;Bitmask to remove the new top significant bits (Only the 4 most sig left)
 			nop
 			ret
 
@@ -103,8 +105,18 @@ multiplication_add:
 			nop
 			rjmp	multiplication_no_mul
 
+;------------------------------------------------------------
 divide:
-			
+			mov		twos, num_b							;Copying B to twos
+			neg		twos								;Takes twos complement of B
+			mov		remainder, num_a					;Copying A to remainder
+			add		remainder, twos
+			inc		counter								;Inc the 
+			cp		num_b, remainder					;Checks if remainder is smaller then num_b						
+			brge	divide								;Branch if remainder is still larger then num_b
+
+			mov		output, counter						;Save counter(The answer)
+			ret
 
 ;--------------------------1s delay--------------------------
 delay_1s:			ldi		R20, 0x53

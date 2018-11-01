@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328PB"</DEVICE>
+ <WORKING_DIR>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>D:\Atmel Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328PBdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\Debug\AssemblerADC.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>AssemblerADC.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>AssemblerADC.map</FILE>
+  <FILE>AssemblerADC.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <io_setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>25</LINE></io_setup>
+  <controller><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>35</LINE></controller>
+  <adc_setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>39</LINE></adc_setup>
+  <wait_adc><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>44</LINE></wait_adc>
+  <position_display><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>61</LINE></position_display>
+  <show><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>52</LINE></show>
+  <display_loop><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>69</LINE></display_loop>
+ </LABELS>
+</ASSEMBLER_INFO>

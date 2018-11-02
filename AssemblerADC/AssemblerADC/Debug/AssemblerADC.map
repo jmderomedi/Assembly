@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm Thu Nov 01 16:27:52 2018
+AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm Fri Nov 02 16:19:13 2018
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1144,13 +1144,22 @@ EQU  TIMER4_OVFaddr 00000058
 EQU  INT_VECTORS_SIZE 0000005a
 DEF  io_set       r16
 DEF  workhorse    r17
-DEF  adc_value_low r18
-DEF  adc_value_high r19
-DEF  counter      r20
+DEF  workhorse_upper r18
+DEF  adc_value_low r19
+DEF  adc_value_high r20
+DEF  counter      r21
+DEF  compare_value_low r22
+DEF  compare_value_high r23
+DEF  divider_high r24
+DEF  divider_low  r25
 CSEG io_setup     00000100
 CSEG controller   00000106
 CSEG adc_setup    00000107
 CSEG wait_adc     0000010a
-CSEG position_display 00000116
-CSEG show         0000010f
-CSEG display_loop 0000011d
+CSEG setup        0000010f
+CSEG new_method   00000118
+CSEG output_new   0000011d
+CSEG lower_leds   00000124
+CSEG output_B_new 0000012a
+CSEG output_D_new 0000012e
+CSEG test         00000132

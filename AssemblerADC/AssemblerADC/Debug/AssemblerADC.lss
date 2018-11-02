@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm Thu Nov 01 16:27:52 2018
+AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm Fri Nov 02 16:19:13 2018
 
 [builtin](2): Including file 'D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328PBdef.inc'
 [builtin](2): Including file 'D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328PBdef.inc'
@@ -1545,19 +1545,24 @@ AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblerADC\Asse
                                  ; This program will show the basic functionality of the Analog-to-Digital Converter (ADC)
                                  ;
                                  ; Resolution of ADC [10-bit]
-                                 ; ADC first conversition [25 ADC cycles]
-                                 ; Normal ADC conversition [13 ADC cycles]
-                                 ; ADC Values:
+                                 ; ADC first conversition [25 ADC cycles] from (28.5)
+                                 ; Normal ADC conversition [13 ADC cycles]	from (28.5)
+                                 ; ADC Values 
                                  ;	Vin = 0.5V: ADC Value = 102; 0001100110
                                  ;	Vin = 2.2V: ADC Value = 405; 0110010101
                                  ;	Vin = 4.7V: ADC Value = 962; 1111000010
                                  
-                                 .cseg													
-                                 .def			io_set			= r16
-                                 .def			workhorse		= r17
-                                 .def			adc_value_low	= r18
-                                 .def			adc_value_high	= r19
-                                 .def			counter			= r20					
+                                 .cseg											
+                                 .def			io_set				= r16
+                                 .def			workhorse			= r17
+                                 .def			workhorse_upper		= r18
+                                 .def			adc_value_low		= r19
+                                 .def			adc_value_high		= r20
+                                 .def			counter				= r21	
+                                 .def			compare_value_low	= r22	
+                                 .def			compare_value_high	= r23	
+                                 .def			divider_high	= r24
+                                 .def			divider_low	= r25	
                                  
                                  .org			0x0000									
 000000 c0ff                      				rjmp		io_setup						
@@ -1565,56 +1570,155 @@ AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblerADC\Asse
                                  
                                  ;-------------------------------------------------------------
                                  io_setup:			
-000100 ef0f                      				ldi			io_set, 0xFF				; Load all 1s into io_set
-000101 b904                      				out			DDRB, io_set				; Set port D to outputs
-000102 b90a                      				out			DDRD, io_set				; Set port B to all outputs
+000100 ef0f                      				ldi			io_set, 0xFF					; Load all 1s into io_set
+000101 b904                      				out			DDRB, io_set					; Set port D to outputs
+000102 b90a                      				out			DDRD, io_set					; Set port B to all outputs
                                  												
-000103 e412                      				ldi			workhorse, 0b01000010		; Use external Vref and use ADC02
+000103 e412                      				ldi			workhorse, 0b01000010			; Use external Vref and use ADC02
 000104 9310 007c                 				sts			ADMUX, workhorse
-                                 
+                                 				
                                  ;-------------------------------------------------------------
-                                 ;This subroutine controls which part of the lab that will be executed
                                  controller:
 000106 c000                      				rjmp		adc_setup		
                                  			
                                  ;-------------------------------------------------------------
                                  adc_setup:				
-000107 ec1f                      				ldi			workhorse, 0b11001111		; Set prescalar for 128, and enable and start ADC and enable the interupt
+000107 ec1f                      				ldi			workhorse, 0b11001111			; Set prescalar for 128, and enable and start ADC and enable the interupt
 000108 9310 007a                 				sts			ADCSRA, workhorse
                                  
                                  ;-------------------------------------------------------------
                                  wait_adc:		
-00010a 9110 007a                 				lds			workhorse, ADCSRA			; Store the value of ADCSRA for comparision
-00010c 7110                      				andi		workhorse, 0b00010000		; Bitmask 'ADCSRA' to keep only interupt flag
-00010d f3e1                      				breq		wait_adc					; Loop back to wait_adc if the zero flag is set 
-                                 														;	andi result = 0
-00010e c007                      				rjmp		position_display			; COMMENT for Part 1
+00010a 9110 007a                 				lds			workhorse, ADCSRA				; Store the value of ADCSRA for comparision
+00010c 7110                      				andi		workhorse, 0b00010000			; Bitmask 'ADCSRA' to keep only interupt flag
+00010d f3e1                      				breq		wait_adc						; Loop back to wait_adc if the zero flag is set 
+                                 															;	andi result = 0
+00010e c000                      				rjmp		setup						; COMMENT for Part 1
                                  
                                  ;-------------------------------------------------------------
-                                 show:									
-00010f 9120 0078                 				lds			adc_value_low, ADCL			; Save values of low ADC conversition
-000111 9130 0079                 				lds			adc_value_high, ADCH		; Save values of high ADC conversition
-000113 b92b                      				out			PORTD, adc_value_low		; Output the low values
-000114 b935                      				out			PORTB, adc_value_high		; Output the high values
+                                 /*show:									
+                                 				lds			adc_value_low, ADCL				; Save values of low ADC conversition
+                                 				lds			adc_value_high, ADCH			; Save values of high ADC conversition
+                                 				out			PORTD, adc_value_low			; Output the low values
+                                 				out			PORTB, adc_value_high			; Output the high values
                                  														
-000115 cff0                      				rjmp		controller
+                                 				rjmp		controller
                                  
                                  ;-------------------------------------------------------------
                                  position_display:
-000116 9120 0078                 				lds			adc_value_low, ADCL			; Save lower value of ADC conversion
-000118 9140 0079                 				lds			counter, ADCH				; Save upper values of ADC conversion
-00011a 1f22                      				rol			adc_value_low				; Rotate lower values left and MSB moved to carry
-00011b 1f44                      				rol			counter						; Rotate upper values left and carry moved to LSB
-00011c e011                      				ldi			workhorse, 0b00000001		; Save value of workhorse to counter
+                                 				ldi			counter, 0b00000000		; Reset counter (Fixs issue of getting stuck		
+                                 				ldi			workhorse, 0b00000001		; Reset starting value of display for Port D
+                                 				ldi			workhorse_upper, 0b00000001	; Reset starting value of display for Port B
+                                 
+                                 				lds			adc_value_low, ADCL				; Save lower value of ADC conversion
+                                 				lds			counter, ADCH					; Save upper values of ADC conversion
+                                 
+                                 				rol			adc_value_low					; Rotate lower values left and MSB moved to carry
+                                 				rol			counter							; Move carry bit into counter
+                                 				rol			adc_value_low					; Rotate lower values left and MSB moved to carry
+                                 				rol			counter							; Move carry bit into counter
+                                 				clc											; Clear the clear to prevent misreads
+                                 
+                                 				ldi			compare_value_low, 0b00000111	; Set the value for moving to Port B
+                                 				cp			compare_value_low, counter
+                                 				brlo		display_loop_upper				; Branch if counter is larger then 7
+                                 
+                                 				rjmp		display_loop_lower				; Jump if counter is less then 7
                                  
                                  ;-------------------------------------------------------------		
-                                 display_loop:		
-00011d 0f11                      				lsl			workhorse					; Shift the bit to the left				
-00011e 954a                      				dec			counter						; Decrement 1
-00011f f7e9                      				brne		display_loop				; Loop back if counter doesnt equal zero
+                                 display_loop_lower:	
+                                 				cpi			counter, 0b00000000
+                                 				breq		output_D					; Branch if the counter equals 0
                                  
-000120 b91b                      				out			PORTD, workhorse
-000121 cfe4                      				rjmp		controller					; Loop back to start of program
+                                 				lsl			workhorse					; Shift the LED bit to the left
+                                 				dec			counter						; Decrement to keep count of shifts
+                                 				brne		display_loop_lower			; Loop back if counter doesnt equal zero yet
+                                 				
+                                 				rjmp		output_D					; Jump to print out LED bit
+                                 
+                                 ;-------------------------------------------------------------
+                                 display_loop_upper:
+                                 				ldi			compare_value_high, 0b00001000	; Set compare value to 8
+                                 
+                                 				cp			compare_value_high, counter
+                                 				breq		output_B						; Branch if counter equals 8 exactly
+                                 				lsl			workhorse_upper					; Shift the LED bit to the left
+                                 
+                                 				cp			compare_value_high, counter		
+                                 				brlo		output_B						; Branch if counter is 9 or greater
+                                 
+                                 ;-------------------------------------------------------------								
+                                 output_D:
+                                 				ldi			io_set, 0b00000000
+                                 				out			PORTB, io_set				; Turn off Port B
+                                 				out			PORTD, workhorse				; Turn on Port D
+                                 				rjmp		controller
+                                 
+                                 ;-------------------------------------------------------------
+                                 output_B:
+                                 				ldi			io_set, 0b00000000
+                                 				out			PORTD, io_set			; Turn off Port D
+                                 				out			PORTB, workhorse_upper			; Turn on Port B
+                                 				rjmp		controller
+                                 */
+                                 
+                                 setup:
+00010f e011                      				ldi			workhorse, 0b00000001
+000110 e021                      				ldi			workhorse_upper, 0b00000001
+000111 e050                      				ldi			counter, 0b00000000
+                                 
+000112 e080                      				ldi			divider_high, 0b00000000
+000113 e790                      				ldi			divider_low, 0b01110000
+000114 9130 0078                 				lds			adc_value_low, ADCL
+000116 9140 0079                 				lds			adc_value_high, ADCH
+                                 new_method:
+                                 
+000118 1b39                      				sub			adc_value_low, divider_low
+000119 0b48                      				sbc			adc_value_high, divider_high
+                                 
+                                 				;cp			adc_value_low, divider_low
+                                 				;brlo		output_new
+00011a f012                      				brmi		output_new
+00011b 9553                      				inc			counter
+                                 				
+00011c cffb                      				rjmp		new_method
+                                 
+                                 output_new:
+                                 				;rjmp		test
+00011d e068                      				ldi			compare_value_low, 0b00001000
+00011e 1756                      				cp			counter, compare_value_low
+00011f f020                      				brlo		lower_leds
+000120 1756                      				cp			counter, compare_value_low
+000121 f041                      				breq		output_B_new
+000122 0f22                      				lsl			workhorse_upper
+000123 c006                      				rjmp		output_B_new			
+                                 
+                                 lower_leds:
+000124 3050                      				cpi			counter, 0b00000000
+000125 f041                      				breq		output_D_new
+000126 0f11                      				lsl			workhorse
+000127 955a                      				dec			counter
+000128 f7d9                      				brne		lower_leds
+000129 c004                      				rjmp		output_D_new
+                                 
+                                 output_B_new:
+00012a e000                      				ldi			io_set, 0b00000000
+00012b b90b                      				out			PORTD, io_set
+00012c b925                      				out			PORTB, workhorse_upper
+00012d cfd8                      				rjmp		controller
+                                 
+                                 output_D_new:
+                                 				
+00012e e000                      				ldi			io_set, 0b00000000
+00012f b905                      				out			PORTB, io_set
+000130 b91b                      				out			PORTD, workhorse
+000131 cfd4                      				rjmp		controller
+                                 				/*
+                                 				sub 128 from ADCL
+                                 				subc 128 from ADCL
+                                 				repeat until ADCL is less then 128
+                                 				*/
+                                 test:
+000132 b95b                      				out PORTD, counter
 
 
 RESOURCE USE INFORMATION
@@ -1634,37 +1738,37 @@ counted separately from r26..r31 here.
 "ATmega328PB" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   3 r17:   9 r18:   4 r19:   2 r20:   3 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r13:   0 r14:   0 r15:   0 r16:   7 r17:   9 r18:   3 r19:   2 r20:   2 
+r21:   7 r22:   3 r23:   0 r24:   2 r25:   2 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 5 out of 35 (14.3%)
+Registers used: 9 out of 35 (25.7%)
 
 "ATmega328PB" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   3 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   1 brlt  :   0 brmi  :   1 
 brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   0 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :   4 lds   :   5 lpm   :   0 lsl   :   1 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   2 cpc   :   0 
+cpi   :   1 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   1 jmp   :   0 
+ld    :   0 ldd   :   0 ldi   :  11 lds   :   3 lpm   :   0 lsl   :   2 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   5 pop   :   0 
-push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   5 rol   :   2 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   7 pop   :   0 
+push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   9 rol   :   0 
+ror   :   0 sbc   :   1 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   2 
-sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 11 out of 113 (9.7%)
+sub   :   1 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
+Instructions used: 17 out of 113 (15.0%)
 
 "ATmega328PB" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000244     70      0     70   32768   0.2%
+[.cseg] 0x000000 0x000268    106      0    106   32768   0.3%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

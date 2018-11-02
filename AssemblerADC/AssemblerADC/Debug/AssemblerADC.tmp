@@ -22,12 +22,16 @@
   <FILE>AssemblerADC.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <io_setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>25</LINE></io_setup>
-  <controller><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>35</LINE></controller>
-  <adc_setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>39</LINE></adc_setup>
-  <wait_adc><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>44</LINE></wait_adc>
-  <position_display><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>61</LINE></position_display>
-  <show><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>52</LINE></show>
-  <display_loop><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>69</LINE></display_loop>
+  <io_setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>30</LINE></io_setup>
+  <controller><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>39</LINE></controller>
+  <adc_setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>43</LINE></adc_setup>
+  <wait_adc><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>48</LINE></wait_adc>
+  <setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>122</LINE></setup>
+  <new_method><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>131</LINE></new_method>
+  <output_new><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>143</LINE></output_new>
+  <lower_leds><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>153</LINE></lower_leds>
+  <output_B_new><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>161</LINE></output_B_new>
+  <output_D_new><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>167</LINE></output_D_new>
+  <test><FILE>D:\American Work\Personal Projects\Assembly\AssemblerADC\AssemblerADC\main.asm</FILE><LINE>178</LINE></test>
  </LABELS>
 </ASSEMBLER_INFO>

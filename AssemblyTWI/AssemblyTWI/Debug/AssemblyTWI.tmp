@@ -1,0 +1,39 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328PB"</DEVICE>
+ <WORKING_DIR>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>D:\Atmel Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328PBdef.inc</FILE>
+  <FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\Debug\AssemblyTWI.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>AssemblyTWI.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>AssemblyTWI.map</FILE>
+  <FILE>AssemblyTWI.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>28</LINE></setup>
+  <twi_setup><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>17</LINE></twi_setup>
+  <twi_start><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>34</LINE></twi_start>
+  <twi_start_wait><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>36</LINE></twi_start_wait>
+  <twi_stop><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>47</LINE></twi_stop>
+  <twi_send_addr><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>53</LINE></twi_send_addr>
+  <twi_send_addr_wait><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>56</LINE></twi_send_addr_wait>
+  <twi_send_byte><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>67</LINE></twi_send_byte>
+  <twi_send_byte_wait><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>70</LINE></twi_send_byte_wait>
+  <twi_error><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>81</LINE></twi_error>
+  <twi_error_loop><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>83</LINE></twi_error_loop>
+  <loop><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>69</LINE></loop>
+ </LABELS>
+</ASSEMBLER_INFO>

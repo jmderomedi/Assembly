@@ -16,9 +16,9 @@
 ; --------------------------------------------------------------------------------------------------------------------------------------
 twi_setup:
 						in				r16, DDRC								; set up SDA/SCL as inputs
-						andi			r16, 0b11111100
+						andi			r16, 0b11001111
 						out				DDRC, r16
-						ldi				r16, 0b00000011							; enable pullups on SDA/SCL
+						ldi				r16, 0b00110000						; enable pullups on SDA/SCL
 						out				PORTC, r16
 						lds				r16, TWSR0								; set prescalar to 1 by clearing TWPS1 and TWPS0
 						andi			r16, 0b11111100
@@ -48,7 +48,7 @@ twi_stop:				ldi				r16, (1<<TWINT | 1<<TWSTO | 1<<TWEN)
 						sts				TWCR0, r16								; generate STOP condition
 						ret
 ; --------------------------------------------------------------------------------------------------------------------------------------
-; Sends TWI address
+; Sends TWI address, slave device to speak to
 ; --------------------------------------------------------------------------------------------------------------------------------------
 twi_send_addr:			sts				TWDR0, r17								; write byte
 						ldi				r16, (1<<TWINT | 1<<TWEN)

@@ -1,0 +1,8 @@
+
+AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm Thu Nov 15 09:17:13 2018
+
+[builtin](2): Including file 'D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328PBdef.inc'
+D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm(17): Including file 'D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm'
+[builtin](2): Including file 'D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328PBdef.inc'
+D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm(17): Including file 'D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm'
+D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm(23): error: Overlap in .cseg: addr=0x0 conflicts with 0x0:0x40

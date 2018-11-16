@@ -141,6 +141,9 @@ list_assignment:
 			cpi			list_count, 0b00000110
 			breq		list_5
 
+			cpi			list_count, 0b00000111
+			breq		list_6
+
 list_assign_ret:
 			ret
 
@@ -171,6 +174,10 @@ set_pointer				ZL, ZH, (man_list*2)		;Resets the pointer to start at top of arra
 ;-------------------------------------------------------------------------------
 list_5:
 set_pointer				ZL, ZH, (ual_list*2)		;Resets the pointer to start at top of array
+			rjmp		list_assign_ret
+;-------------------------------------------------------------------------------
+list_6:
+set_pointer				ZL, ZH, (on_list*2)		;Resets the pointer to start at top of array
 			ldi			list_count, 0b00000000
 			rjmp		list_assign_ret
 

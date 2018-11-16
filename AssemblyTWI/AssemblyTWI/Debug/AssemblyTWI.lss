@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm Fri Nov 16 12:23:30 2018
+AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm Fri Nov 16 12:27:36 2018
 
 [builtin](2): Including file 'D:/Atmel Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328PBdef.inc'
 D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm(71): Including file 'D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm'
@@ -1736,7 +1736,7 @@ D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm(71)
 00005a dfd5
 00005b 9583                      send_byte_data_imm		0b10000001
                                  				
-00005c e2ea
+00005c e3e4
 00005d e0f1                      set_pointer				ZL, ZH, (rtfm_list*2)		;Set the pointer intially
                                  
                                  ;-------------------------------------------------------------------------------
@@ -1766,130 +1766,144 @@ D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm(71)
 00006d f781                      			brne		loop						;If it has not, loop again
 00006e 9593                      			inc			list_count
 00006f d003                      			rcall		list_assignment
-000070 d00f                      			rcall		reset						;If it has call reset
+000070 d011                      			rcall		reset						;If it has call reset
                                  
                                  			
-000071 d03f                      			rcall		delay_1s
+000071 d044                      			rcall		delay_1s
                                  						
 000072 cfeb                      			rjmp		loop
                                  
                                  ;-------------------------------------------------------------------------------
                                  list_assignment:			
 000073 3091                      			cpi			list_count, 0b00000001
-000074 f069                      			breq		list_0
+000074 f079                      			breq		list_0
                                  
 000075 3092                      			cpi			list_count, 0b00000010
-000076 f071                      			breq		list_1
+000076 f081                      			breq		list_1
                                  
 000077 3093                      			cpi			list_count, 0b00000011
-000078 f079                      			breq		list_2
+000078 f089                      			breq		list_2
                                  
 000079 3094                      			cpi			list_count, 0b00000100
-00007a f081                      			breq		list_3
+00007a f091                      			breq		list_3
                                  
 00007b 3095                      			cpi			list_count, 0b00000101
-00007c f089                      			breq		list_4
+00007c f099                      			breq		list_4
                                  				
 00007d 3096                      			cpi			list_count, 0b00000110
-00007e f091                      			breq		list_5
+00007e f0a1                      			breq		list_5
+                                 
+00007f 3097                      			cpi			list_count, 0b00000111
+000080 f0a9                      			breq		list_6
                                  
                                  list_assign_ret:
-00007f 9508                      			ret
+000081 9508                      			ret
                                  
                                  reset:
-000080 e080                      			ldi			led_address, 0b00000000		;Sets the counter to zero		
-000081 9508                      			ret										;Returns
+000082 e080                      			ldi			led_address, 0b00000000		;Sets the counter to zero		
+000083 9508                      			ret										;Returns
                                  
                                  ;-------------------------------------------------------------------------------
                                  list_0:
-000082 e2ea
-000083 e0f1                      set_pointer				ZL, ZH, (rtfm_list*2)		;Resets the pointer to start at top of array
-000084 cffa                      			rjmp		list_assign_ret
+000084 e3e4
+000085 e0f1                      set_pointer				ZL, ZH, (rtfm_list*2)		;Resets the pointer to start at top of array
+000086 cffa                      			rjmp		list_assign_ret
                                  ;-------------------------------------------------------------------------------
                                  list_1:
-000085 e3ea
-000086 e0f1                      set_pointer				ZL, ZH, (read_list*2)		;Resets the pointer to start at top of array
-000087 cff7                      			rjmp		list_assign_ret
+000087 e4e4
+000088 e0f1                      set_pointer				ZL, ZH, (read_list*2)		;Resets the pointer to start at top of array
+000089 cff7                      			rjmp		list_assign_ret
                                  ;-------------------------------------------------------------------------------
                                  list_2:
-000088 e4e2
-000089 e0f1                      set_pointer				ZL, ZH, (the_list*2)		;Resets the pointer to start at top of array
-00008a cff4                      			rjmp		list_assign_ret
+00008a e4ec
+00008b e0f1                      set_pointer				ZL, ZH, (the_list*2)		;Resets the pointer to start at top of array
+00008c cff4                      			rjmp		list_assign_ret
                                  ;-------------------------------------------------------------------------------
                                  list_3:
-00008b e4ea
-00008c e0f1                      set_pointer				ZL, ZH, (F_ing_list*2)		;Resets the pointer to start at top of array
-00008d cff1                      			rjmp		list_assign_ret
+00008d e5e4
+00008e e0f1                      set_pointer				ZL, ZH, (F_ing_list*2)		;Resets the pointer to start at top of array
+00008f cff1                      			rjmp		list_assign_ret
                                  ;-------------------------------------------------------------------------------
                                  list_4:
-00008e e5e2
-00008f e0f1                      set_pointer				ZL, ZH, (man_list*2)		;Resets the pointer to start at top of array
-000090 cfee                      			rjmp		list_assign_ret
+000090 e5ec
+000091 e0f1                      set_pointer				ZL, ZH, (man_list*2)		;Resets the pointer to start at top of array
+000092 cfee                      			rjmp		list_assign_ret
                                  ;-------------------------------------------------------------------------------
                                  list_5:
-000091 e5ea
-000092 e0f1                      set_pointer				ZL, ZH, (ual_list*2)		;Resets the pointer to start at top of array
-000093 e090                      			ldi			list_count, 0b00000000
-000094 cfea                      			rjmp		list_assign_ret
+000093 e6e4
+000094 e0f1                      set_pointer				ZL, ZH, (ual_list*2)		;Resets the pointer to start at top of array
+000095 cfeb                      			rjmp		list_assign_ret
+                                 ;-------------------------------------------------------------------------------
+                                 list_6:
+000096 e3ec
+000097 e0f1                      set_pointer				ZL, ZH, (on_list*2)		;Resets the pointer to start at top of array
+000098 e090                      			ldi			list_count, 0b00000000
+000099 cfe7                      			rjmp		list_assign_ret
                                  
                                  ;-------------------------------------------------------------------------------
                                  ;Varlist to print out RTFM
-000095 20f3                      rtfm_list:	.DW			0b0010000011110011,\
-000096 1201                      						0b0001001000000001,\
-000097 0071                      						0b0000000001110001,\
-000098 0536                      						0b0000010100110110
+00009a 20f3                      rtfm_list:	.DW			0b0010000011110011,\
+00009b 1201                      						0b0001001000000001,\
+00009c 0071                      						0b0000000001110001,\
+00009d 0536                      						0b0000010100110110
                                  
                                  ;-------------------------------------------------------------------------------
                                  ;Varlist to print out all leds ON						
-000099 7fff                      on_list:	.DW			0b0111111111111111,\
-00009a 7fff                      						0b0111111111111111,\
-00009b 7fff                      						0b0111111111111111,\
-00009c 7fff                      						0b0111111111111111
+00009e 7fff                      on_list:	.DW			0b0111111111111111,\
+00009f 7fff                      						0b0111111111111111,\
+0000a0 7fff                      						0b0111111111111111,\
+0000a1 7fff                      						0b0111111111111111
                                  
                                  ;-------------------------------------------------------------------------------
-00009d 20f3                      read_list:	.DW			0b0010000011110011,\
-00009e 00f9                      						0b0000000011111001,\
-00009f 00f7                      						0b0000000011110111,\
-0000a0 120f                      						0b0001001000001111
+                                 ;Varlist to print out READ
+0000a2 20f3                      read_list:	.DW			0b0010000011110011,\
+0000a3 00f9                      						0b0000000011111001,\
+0000a4 00f7                      						0b0000000011110111,\
+0000a5 120f                      						0b0001001000001111
                                  
                                  ;-------------------------------------------------------------------------------
-0000a1 0000                      the_list:	.DW			0b0000000000000000,\
-0000a2 1201                      						0b0001001000000001,\
-0000a3 00f6                      						0b0000000011110110,\
-0000a4 00f9                      						0b0000000011111001
+                                 ;Varlist to print out THE
+0000a6 0000                      the_list:	.DW			0b0000000000000000,\
+0000a7 1201                      						0b0001001000000001,\
+0000a8 00f6                      						0b0000000011110110,\
+0000a9 00f9                      						0b0000000011111001
                                  
                                  ;-------------------------------------------------------------------------------
-0000a5 4071                      F_ing_list:	.DW			0b0100000001110001,\
-0000a6 1200                      						0b0001001000000000,\
-0000a7 2136                      						0b0010000100110110,\
-0000a8 00bd                      						0b0000000010111101
+                                 ;Varlist to print out F.ING
+0000aa 4071                      F_ing_list:	.DW			0b0100000001110001,\
+0000ab 1200                      						0b0001001000000000,\
+0000ac 2136                      						0b0010000100110110,\
+0000ad 00bd                      						0b0000000010111101
                                  
                                  ;-------------------------------------------------------------------------------
-0000a9 0000                      man_list:	.DW			0b0000000000000000,\
-0000aa 0536                      						0b0000010100110110,\
-0000ab 00f7                      						0b0000000011110111,\
-0000ac 2136                      						0b0010000100110110
+                                 ;Varlist to print out MAN
+0000ae 0000                      man_list:	.DW			0b0000000000000000,\
+0000af 0536                      						0b0000010100110110,\
+0000b0 00f7                      						0b0000000011110111,\
+0000b1 2136                      						0b0010000100110110
                                  
                                  ;-------------------------------------------------------------------------------
-0000ad 003e                      ual_list:	.DW			0b0000000000111110,\
-0000ae 00f7                      						0b0000000011110111,\
-0000af 0038                      						0b0000000000111000,\
-0000b0 0000                      						0b0000000000000000
+                                 ;Varlist to print out UAL
+0000b2 003e                      ual_list:	.DW			0b0000000000111110,\
+0000b3 00f7                      						0b0000000011110111,\
+0000b4 0038                      						0b0000000000111000,\
+0000b5 0000                      						0b0000000000000000
                                  
                                  ;-------------------------------------------------------------------------------
-0000b1 e543                      delay_1s:	ldi			R20, 0x53
-0000b2 ef5b                      delay_1s_1:	ldi			R21, 0xFB
-0000b3 ef6f                      delay_1s_2:	ldi			R22, 0xFF
-0000b4 956a                      delay_1s_3:	dec			R22
-0000b5 f7f1                      			brne		delay_1s_3
-0000b6 955a                      			dec			R21
-0000b7 f7d9                      			brne		delay_1s_2
-0000b8 954a                      			dec			R20
-0000b9 f7c1                      			brne		delay_1s_1
-0000ba e042                      			ldi			R20, 0x02
-0000bb 954a                      delay_1s_4:	dec			R20
-0000bc f7f1                      			brne		delay_1s_4
-0000bd 0000                      			nop	
+                                 
+0000b6 e543                      delay_1s:	ldi			R20, 0x53
+0000b7 ef5b                      delay_1s_1:	ldi			R21, 0xFB
+0000b8 ef6f                      delay_1s_2:	ldi			R22, 0xFF
+0000b9 956a                      delay_1s_3:	dec			R22
+0000ba f7f1                      			brne		delay_1s_3
+0000bb 955a                      			dec			R21
+0000bc f7d9                      			brne		delay_1s_2
+0000bd 954a                      			dec			R20
+0000be f7c1                      			brne		delay_1s_1
+0000bf e042                      			ldi			R20, 0x02
+0000c0 954a                      delay_1s_4:	dec			R20
+0000c1 f7f1                      			brne		delay_1s_4
+0000c2 0000                      			nop	
 
 
 RESOURCE USE INFORMATION
@@ -1910,25 +1924,25 @@ counted separately from r26..r31 here.
 x  :   0 y  :   0 z  :   2 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
 r13:   0 r14:   0 r15:   0 r16:  37 r17:  14 r18:   0 r19:   2 r20:   4 
-r21:   2 r22:   2 r23:   2 r24:  10 r25:   9 r26:   0 r27:   0 r28:   0 
-r29:   0 r30:   7 r31:   7 
+r21:   2 r22:   2 r23:   2 r24:  10 r25:  10 r26:   0 r27:   0 r28:   0 
+r29:   0 r30:   8 r31:   8 
 Registers used: 12 out of 35 (34.3%)
 
 "ATmega328PB" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   5 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   6 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   7 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :  10 cpse  :   0 dec   :   4 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :  11 cpse  :   0 dec   :   4 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   7 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :  39 lds   :   7 lpm   :   2 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   :  41 lds   :   7 lpm   :   2 lsl   :   0 
 lsr   :   0 mov   :   3 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   1 or    :   0 ori   :   0 out   :   3 pop   :   0 
-push  :   0 rcall :  22 ret   :   8 reti  :   0 rjmp  :  12 rol   :   0 
+push  :   0 rcall :  22 ret   :   8 reti  :   0 rjmp  :  13 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   3 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
@@ -1939,7 +1953,7 @@ Instructions used: 18 out of 113 (15.9%)
 "ATmega328PB" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00017e    326     56    382   32768   1.2%
+[.cseg] 0x000000 0x000188    336     56    392   32768   1.2%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

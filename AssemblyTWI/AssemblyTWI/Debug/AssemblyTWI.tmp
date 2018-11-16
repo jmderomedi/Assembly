@@ -34,27 +34,28 @@
   <twi_send_byte_wait><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>70</LINE></twi_send_byte_wait>
   <twi_error><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>81</LINE></twi_error>
   <twi_error_loop><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\TWI_polling_lib.asm</FILE><LINE>83</LINE></twi_error_loop>
-  <rtfm_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>179</LINE></rtfm_list>
+  <rtfm_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>186</LINE></rtfm_list>
   <loop><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>98</LINE></loop>
   <list_assignment><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>125</LINE></list_assignment>
-  <reset><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>147</LINE></reset>
-  <delay_1s><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>222</LINE></delay_1s>
-  <list_0><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>152</LINE></list_0>
-  <list_1><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>156</LINE></list_1>
-  <list_2><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>160</LINE></list_2>
-  <list_3><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>164</LINE></list_3>
-  <list_4><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>168</LINE></list_4>
-  <list_5><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>172</LINE></list_5>
-  <list_assign_ret><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>144</LINE></list_assign_ret>
-  <read_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>192</LINE></read_list>
-  <the_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>198</LINE></the_list>
-  <F_ing_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>204</LINE></F_ing_list>
-  <man_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>210</LINE></man_list>
-  <ual_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>216</LINE></ual_list>
-  <on_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>186</LINE></on_list>
-  <delay_1s_1><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>223</LINE></delay_1s_1>
-  <delay_1s_2><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>224</LINE></delay_1s_2>
-  <delay_1s_3><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>225</LINE></delay_1s_3>
-  <delay_1s_4><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>232</LINE></delay_1s_4>
+  <reset><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>150</LINE></reset>
+  <delay_1s><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>235</LINE></delay_1s>
+  <list_0><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>155</LINE></list_0>
+  <list_1><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>159</LINE></list_1>
+  <list_2><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>163</LINE></list_2>
+  <list_3><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>167</LINE></list_3>
+  <list_4><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>171</LINE></list_4>
+  <list_5><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>175</LINE></list_5>
+  <list_6><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>179</LINE></list_6>
+  <list_assign_ret><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>147</LINE></list_assign_ret>
+  <read_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>200</LINE></read_list>
+  <the_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>207</LINE></the_list>
+  <F_ing_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>214</LINE></F_ing_list>
+  <man_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>221</LINE></man_list>
+  <ual_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>228</LINE></ual_list>
+  <on_list><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>193</LINE></on_list>
+  <delay_1s_1><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>236</LINE></delay_1s_1>
+  <delay_1s_2><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>237</LINE></delay_1s_2>
+  <delay_1s_3><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>238</LINE></delay_1s_3>
+  <delay_1s_4><FILE>D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm</FILE><LINE>245</LINE></delay_1s_4>
  </LABELS>
 </ASSEMBLER_INFO>

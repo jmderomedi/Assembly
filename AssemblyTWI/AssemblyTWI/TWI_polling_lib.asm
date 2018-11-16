@@ -18,7 +18,7 @@ twi_setup:
 						in				r16, DDRC								; set up SDA/SCL as inputs
 						andi			r16, 0b11001111
 						out				DDRC, r16
-						ldi				r16, 0b00110000						; enable pullups on SDA/SCL
+						ldi				r16, 0b00110000							; enable pullups on SDA/SCL
 						out				PORTC, r16
 						lds				r16, TWSR0								; set prescalar to 1 by clearing TWPS1 and TWPS0
 						andi			r16, 0b11111100
@@ -33,12 +33,12 @@ twi_setup:
 ; --------------------------------------------------------------------------------------------------------------------------------------
 twi_start:				ldi				r16, (1<<TWINT | 1<<TWSTA | 1<<TWEN)
 						sts				TWCR0, r16								; generate START condition
-	twi_start_wait:		lds				r16, TWCR0
+	twi_start_wait:		lds				r16, TWCR0								
 						sbrs			r16, TWINT
 						rjmp			twi_start_wait
 						lds				r16, TWSR0								; check to make sure bus works
 						andi			r16, 0b11111000
-						cpi				r16, TWI_init_chk
+						cpi				r16, TWI_init_chk						; check if an ACK was recieved
 						;brne			twi_error
 						ret
 ; --------------------------------------------------------------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ twi_send_addr:			sts				TWDR0, r17								; write byte
 	twi_send_addr_wait:	lds				r16, TWCR0
 						sbrs			r16, TWINT
 						rjmp			twi_send_addr_wait
-						lds				r16, TWSR0								; did you get ACK?
+						lds				r16, TWSR0								; check for an ACK
 						andi			r16, 0b11111000
 						cpi				r16, TWI_ack_addr
 						;brne			twi_error
@@ -70,7 +70,7 @@ twi_send_byte:			sts				TWDR0, r17								; write byte
 	twi_send_byte_wait:	lds				r16, TWCR0
 						sbrs			r16, TWINT
 						rjmp			twi_send_byte_wait
-						lds				r16, TWSR0								; did you get ACK?
+						lds				r16, TWSR0								; check for an ACK
 						andi			r16, 0b11111000
 						cpi				r16, TWI_ack_data
 						;brne			twi_error

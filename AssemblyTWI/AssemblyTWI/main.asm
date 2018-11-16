@@ -23,8 +23,9 @@
 .def			io_setup		= r16						
 .def			workhorse		= r17			
 .def			z_low			= r19				;Low value for pointer
-.def			z_high			= r20				;High value for pointer
-.def			led_address		= r21				;Counter
+.def			z_high			= r23				;High value for pointer
+.def			led_address		= r24				;Counter
+.def			list_count		= r25				;Counter to know which list to go into
 
 ;-------------------------------------------------------------------------------
 .macro			set_pointer
@@ -72,6 +73,7 @@
 ;-------------------------------------------------------------------------------
 setup:
 			ldi			led_address, 0b00000000		;Intialize the counter to 0
+			ldi			list_count, 0b00000000
 			rcall		twi_setup					;Setup the TWI for communication
 
 			;Start the internal system clock block
@@ -107,17 +109,70 @@ send_byte_data			z_high						;Send upper byte of the word to screen
 
 			rcall		twi_stop					;Stop command of the communication
 
+			
 			cpi			led_address, 0b00001000		;Checks if the counter has reached 8
 			brne		loop						;If it has not, loop again
+			inc			list_count
+			rcall		list_assignment
 			rcall		reset						;If it has call reset
 
+			
+			rcall		delay_1s
+						
 			rjmp		loop
 
 ;-------------------------------------------------------------------------------
+list_assignment:			
+			cpi			list_count, 0b00000001
+			breq		list_0
+
+			cpi			list_count, 0b00000010
+			breq		list_1
+
+			cpi			list_count, 0b00000011
+			breq		list_2
+
+			cpi			list_count, 0b00000100
+			breq		list_3
+
+			cpi			list_count, 0b00000101
+			breq		list_4
+				
+			cpi			list_count, 0b00000110
+			breq		list_5
+
+list_assign_ret:
+			ret
+
 reset:
-			ldi			led_address, 0b00000000		;Sets the counter to zero
-set_pointer				ZL, ZH, (rtfm_list*2)		;Resets the pointer to start at top of array
+			ldi			led_address, 0b00000000		;Sets the counter to zero		
 			ret										;Returns
+
+;-------------------------------------------------------------------------------
+list_0:
+set_pointer				ZL, ZH, (rtfm_list*2)		;Resets the pointer to start at top of array
+			rjmp		list_assign_ret
+;-------------------------------------------------------------------------------
+list_1:
+set_pointer				ZL, ZH, (read_list*2)		;Resets the pointer to start at top of array
+			rjmp		list_assign_ret
+;-------------------------------------------------------------------------------
+list_2:
+set_pointer				ZL, ZH, (the_list*2)		;Resets the pointer to start at top of array
+			rjmp		list_assign_ret
+;-------------------------------------------------------------------------------
+list_3:
+set_pointer				ZL, ZH, (F_ing_list*2)		;Resets the pointer to start at top of array
+			rjmp		list_assign_ret
+;-------------------------------------------------------------------------------
+list_4:
+set_pointer				ZL, ZH, (man_list*2)		;Resets the pointer to start at top of array
+			rjmp		list_assign_ret
+;-------------------------------------------------------------------------------
+list_5:
+set_pointer				ZL, ZH, (ual_list*2)		;Resets the pointer to start at top of array
+			ldi			list_count, 0b00000000
+			rjmp		list_assign_ret
 
 ;-------------------------------------------------------------------------------
 ;Varlist to print out RTFM
@@ -134,28 +189,53 @@ on_list:	.DW			0b0111111111111111,\
 						0b0111111111111111
 
 ;-------------------------------------------------------------------------------
+;Varlist to print out READ
 read_list:	.DW			0b0010000011110011,\
 						0b0000000011111001,\
 						0b0000000011110111,\
 						0b0001001000001111
 
 ;-------------------------------------------------------------------------------
+;Varlist to print out THE
 the_list:	.DW			0b0000000000000000,\
 						0b0001001000000001,\
 						0b0000000011110110,\
 						0b0000000011111001
+
 ;-------------------------------------------------------------------------------
-F_ing_list:		.DW		0b0100000001110001,\
+;Varlist to print out F.ING
+F_ing_list:	.DW			0b0100000001110001,\
 						0b0001001000000000,\
 						0b0010000100110110,\
 						0b0000000010111101
+
 ;-------------------------------------------------------------------------------
+;Varlist to print out MAN
 man_list:	.DW			0b0000000000000000,\
 						0b0000010100110110,\
 						0b0000000011110111,\
 						0b0010000100110110
+
 ;-------------------------------------------------------------------------------
+;Varlist to print out UAL
 ual_list:	.DW			0b0000000000111110,\
 						0b0000000011110111,\
 						0b0000000000111000,\
 						0b0000000000000000
+
+;-------------------------------------------------------------------------------
+
+delay_1s:	ldi			R20, 0x53
+delay_1s_1:	ldi			R21, 0xFB
+delay_1s_2:	ldi			R22, 0xFF
+delay_1s_3:	dec			R22
+			brne		delay_1s_3
+			dec			R21
+			brne		delay_1s_2
+			dec			R20
+			brne		delay_1s_1
+			ldi			R20, 0x02
+delay_1s_4:	dec			R20
+			brne		delay_1s_4
+			nop	
+			ret	

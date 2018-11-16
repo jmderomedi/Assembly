@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm Fri Nov 16 11:44:18 2018
+AVRASM ver. 2.2.7  D:\American Work\Personal Projects\Assembly\AssemblyTWI\AssemblyTWI\main.asm Fri Nov 16 12:23:30 2018
 
 
 EQU  SIGNATURE_000 0000001e
@@ -1145,8 +1145,9 @@ EQU  INT_VECTORS_SIZE 0000005a
 DEF  io_setup     r16
 DEF  workhorse    r17
 DEF  z_low        r19
-DEF  z_high       r20
-DEF  led_address  r21
+DEF  z_high       r23
+DEF  led_address  r24
+DEF  list_count   r25
 CSEG setup        00000041
 EQU  TWI_init_chk 00000008
 EQU  TWI_ack_addr 00000018
@@ -1161,12 +1162,25 @@ CSEG twi_send_byte 00000030
 CSEG twi_send_byte_wait 00000035
 CSEG twi_error    0000003e
 CSEG twi_error_loop 00000040
-CSEG rtfm_list    00000073
-CSEG loop         0000005d
-CSEG reset        0000006f
-CSEG on_list      00000077
-CSEG read_list    0000007b
-CSEG the_list     0000007f
-CSEG F_ing_list   00000083
-CSEG man_list     00000087
-CSEG ual_list     0000008b
+CSEG rtfm_list    00000095
+CSEG loop         0000005e
+CSEG list_assignment 00000073
+CSEG reset        00000080
+CSEG delay_1s     000000b1
+CSEG list_0       00000082
+CSEG list_1       00000085
+CSEG list_2       00000088
+CSEG list_3       0000008b
+CSEG list_4       0000008e
+CSEG list_5       00000091
+CSEG list_assign_ret 0000007f
+CSEG read_list    0000009d
+CSEG the_list     000000a1
+CSEG F_ing_list   000000a5
+CSEG man_list     000000a9
+CSEG ual_list     000000ad
+CSEG on_list      00000099
+CSEG delay_1s_1   000000b2
+CSEG delay_1s_2   000000b3
+CSEG delay_1s_3   000000b4
+CSEG delay_1s_4   000000bb
